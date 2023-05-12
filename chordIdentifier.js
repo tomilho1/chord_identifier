@@ -1,18 +1,11 @@
 // Get intervals of an array
-function getIntervals(array_a) {
-    array_b = []
-    for (let step = 0; step < array_a.length - 1; step++) {
-        array_b.push(array_a[step + 1] - array_a[0])
-    }
-    return array_b
-}
+
 
 //
 function lengthCompare(array_x, array_y) {
-    if (array_x.length === array_y.length)
-        return true
-
-    else return false
+    if (array_x.length === array_y.length) {
+        return true }
+    else {return false}
 }
 
 //
@@ -35,42 +28,52 @@ function arrayCompare(array_x, array_y) {
     return bool
 }
 
-// Transforms an array of strings (notes) in an array of indexes for fifth_circle
-function getNoteValues (str) {
-  let array_b = []
-  for (step = 0; step < 20; step++) {
-    if (str.includes(fifth_circle[step]))
-    array_b.push(step)
-    else {}
-  }
-  return array_b
-}
-
 ////////////////////////////////////////////////////////////////////////////
 
 let fifth_circle = ["Fb", "Cb", "Gb", "Db", "Ab", "Eb", "Bb",      // 0 - 6
                     "F",  "C",  "G",  "D",  "A",  "E",  "B",       // 7 - 13
                     "F#", "C#", "G#", "D#", "A#", "E#", "B#"]      // 14 - 20
 
-let chordLibrary = [[1,4],[3,1],[3,6]]
+let chordLibrary = [[1,4],[3,4],[3,6],[4,8]]
+
+////////////////////////////////////////////////////////////////////////////
+
+let chord = {}
+chord.stringnotes = ["C","E","G#"]
+
+chord.notes = function getnotes () {
+  let array_b = []
+  for (step = 0; step < 20; step++) {
+    if (chord.stringnotes.includes(fifth_circle[step]))
+    array_b.push(step)
+    else {}
+  }
+  return array_b
+}
+
+chord.intervals = function getIntervals() {
+    array_b = []
+    for (let step = 0; step < chord.notes().length - 1; step++) {
+        array_b.push(chord.notes()[step + 1] - chord.notes()[0])
+    }
+    return array_b
+}
+
+chord.index = function librarySearch() {
+  let index
+  for (i = 0, end = false; i < chordLibrary.length; i++) {
+    if (arrayCompare(chord.intervals(), chordLibrary[i]) && (end !== true)) {
+      index = i
+      end = true
+    }
+    else { index = null }
+} return index
+}
+  
 
 
-
-
-
-noteChord = ["C", "Eb", "Gb"] //  7, 8, 11
-
-
-
-console.log(getNoteValues(noteChord))
-console.log(getIntervals(getNoteValues(noteChord)))
-
-
-
-
-
-
-
-
+console.log(chord.notes())
+console.log(chord.intervals())
+console.log(chord.index())
 
 
