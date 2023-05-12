@@ -1,25 +1,14 @@
-// Get intervals of an array
-
-
-//
-function lengthCompare(array_x, array_y) {
-    if (array_x.length === array_y.length) {
-        return true }
-    else {return false}
-}
-
 //
 function arrayCompare(array_x, array_y) {
     let bool
-    let end
-    if (lengthCompare(array_x, array_y) === true) {
-        for (let step = 0, end = false; (step < array_x.length) && (end !== true) ; step++) {
+    if (array_x.length === array_y.length) {
+        for (let step = 0, end = false; (step < array_x.length); step++) {
             if (array_x[step] === array_y[step]) {
                 bool = true
             }
             else {
-                end = true
                 bool = false
+                break
             }
         }
     }
@@ -60,14 +49,11 @@ chord.intervals = function getIntervals() {
 }
 
 chord.index = function librarySearch() {
-  let index
-  for (i = 0, end = false; i < chordLibrary.length; i++) {
-    if (arrayCompare(chord.intervals(), chordLibrary[i]) && (end !== true)) {
-      index = i
-      end = true
+  for (i = 0; i < chordLibrary.length; i++) {
+    if (arrayCompare(chord.intervals(), chordLibrary[i])) {
+      break
     }
-    else { index = null }
-} return index
+} return i
 }
   
 
