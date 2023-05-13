@@ -18,31 +18,39 @@ function arrayCompare(array_x, array_y) {
 }
 
 ////////////////////////////////////////////////////////////////////////////
+// Library
 
-let fifth_circle = ["Fb", "Cb", "Gb", "Db", "Ab", "Eb", "Bb",      // 0 - 6
-                    "F",  "C",  "G",  "D",  "A",  "E",  "B",       // 7 - 13
-                    "F#", "C#", "G#", "D#", "A#", "E#", "B#"]      // 14 - 20
+let fifth_circle = ["Fbb","Cbb","Gbb","Dbb","Abb","Ebb","Bbb",     // 0 - 6
+                    "Fb", "Cb", "Gb", "Db", "Ab", "Eb", "Bb",      // 7 - 13
+                    "F",  "C",  "G",  "D",  "A",  "E",  "B",       // 14 - 20
+                    "F#", "C#", "G#", "D#", "A#", "E#", "B#",      // 21 - 27
+                    "F##","C##","G##","D##","A##","E##","B##"]     // 28 - 34
 
 let chordLibrary =
 [[1,4],[3,4],[3,6],[2,3,6],[1,4,5],[1,3,4],[4,8],[1],
  [1,2],[1,2,4],[3,4,5],[1,2,3],[1,4,6],[1,4,5,6],[2,3,6,8],[3,4,8],
- [1,3,4], [1,2]]
+ [1,3,4], [1,2],[1,4,5],[2,6,10],[4,5,8],[2,3,4,6],[1,2,3,4],[3,6,9],
+ [1,2,3]]
 
 let chordnames =
 ["","m","dim","7","maj7","min7","+","5",
- "sus4", "maj7(add9)","min7(add9)","7sus4","lyd","lyd7","7lyd","m(maj7)",
- "6", "sus2"]
+ "sus4", "maj9","min7(add9)","7sus4","lyd","lyd7","7lyd","m(maj7)",
+ "6", "sus2","m(b6)","7#5","maj7#5","9","9sus4","dim7",
+ "sus2/4"]
 
 tonicIndex =
 [0, 1, 2, 1, 0, 2, 0, 0,
  1, 0, 1, 2, 0, 0, 1, 1,
- 0, 0]
+ 0, 0, 2, 1, 0, 1, 2, 3,
+ 1]
 
 ////////////////////////////////////////////////////////////////////////////
+// Chord Object
 
 let chord = {}
-chord.stringnotes = ["Eb","A","C","F"]
+chord.stringnotes = ["C","E","G","Bb"]
 
+//
 function updateChordData () {
 
 // chord.bass
@@ -50,7 +58,7 @@ chord.bass = chord.stringnotes[0]
 
 // chord.notes
 let array_a = []
-for (inc_a = 0; inc_a < 20; inc_a++) {
+for (inc_a = 0; inc_a < 35; inc_a++) {
   if (chord.stringnotes.includes(fifth_circle[inc_a]))
     array_a.push(inc_a)
   else {}
@@ -105,5 +113,3 @@ console.log(chord.name[inc])
 if (chord.index[0] === undefined){
   console.log("Não possível identificar este acorde")
 }
-
-
