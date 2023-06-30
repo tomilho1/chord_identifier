@@ -1,3 +1,7 @@
+// chordForge.js is the module used to registrate chords in
+// the chord library.txt. Use it if you want to play around
+// and add your own chords and stuff.
+
 let fifth_circle = [
     "Fbb", "Cbb", "Gbb", "Dbb", "Abb", "Ebb", "Bbb",
     "Fb", "Cb", "Gb", "Db", "Ab", "Eb", "Bb",
@@ -5,22 +9,17 @@ let fifth_circle = [
     "F#", "C#", "G#", "D#", "A#", "E#", "B#",
     "F##", "C##", "G##", "D##", "A##", "E##", "B##"]
 
-//
-
-console.clear()
-
 const readlineSync = require('readline-sync')
 let chord = {}
-
-//
+console.clear()
 
 let userNotes = readlineSync.question("Notes in root position: ").replaceAll(",", " ").split(" ")
 chord.root = userNotes[0]
 
 // chord.looseNotes are the notes in the order in which they show
-// in the circle of fifths. This information which will later let
-// the program easily identify chords no matter the order the user
-// types the notes.
+// in the circle of fifths. This data will later let the program
+// easily identify chords no matter the order the user types
+// the notes.
 
 // chord.orderedNotes are the notes of the chord ordered in its root,
 // closed position.
@@ -87,14 +86,13 @@ let modcircl = circle
 
 for (i = 0; i < userNotes.length; i++) {
     let chordNotes = userNotes[i].concat("  ").slice(0, 3)
-
     modcircl = modcircl.replace(chordNotes, "\x1b[48;5;236m" + chordNotes + "\x1b[40m")
 }
 
-{
-    let rootNote = chord.root.concat("  ").slice(0, 3) // "T "
-    modcircl = modcircl.replace(rootNote, "\x1b[48;5;241m" + rootNote + "\x1b[40m")
-}
+let rootNote = chord.root.concat("  ").slice(0, 3) // "T "
+modcircl = modcircl.replace(rootNote, "\x1b[48;5;241m" + rootNote + "\x1b[40m")
+
+// Log Section
 
 console.clear()
 console.log(modcircl + "\x1b[0m")
