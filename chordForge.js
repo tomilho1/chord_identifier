@@ -2,6 +2,10 @@
 // the chord library.txt. Use it if you want to play around
 // and add your own chords and stuff.
 
+console.clear()
+const readlineSync = require('readline-sync')
+const musician = require('./chordTools')
+
 let fifth_circle = [
     "Fbb", "Cbb", "Gbb", "Dbb", "Abb", "Ebb", "Bbb",
     "Fb", "Cb", "Gb", "Db", "Ab", "Eb", "Bb",
@@ -9,7 +13,7 @@ let fifth_circle = [
     "F#", "C#", "G#", "D#", "A#", "E#", "B#",
     "F##", "C##", "G##", "D##", "A##", "E##", "B##"]
 
-const readlineSync = require('readline-sync')
+
 let chord = {}
 console.clear()
 
@@ -84,8 +88,8 @@ F## C## G## D## A## E## B##
 // the notes of the input chord and its root highlighted.
 let modcircl = circle
 
-for (i = 0; i < userNotes.length; i++) {
-    let chordNotes = userNotes[i].concat("  ").slice(0, 3)
+for (i = 0; i < chord.stringNotes.length; i++) {
+    let chordNotes = chord.stringNotes[i].concat("  ").slice(0, 3)
     modcircl = modcircl.replace(chordNotes, "\x1b[48;5;236m" + chordNotes + "\x1b[40m")
 }
 
@@ -98,13 +102,13 @@ console.clear()
 console.log(modcircl + "\x1b[0m")
 console.log("\n", chord)
 
-// if (readlineSync.keyInYN(`
-// Is this correct?`)) {
-//     chord.symbol = readlineSync.question("Music notation: ")
-//     chord.formalName = readlineSync.question("Formal name: ")
-// } else {
-//     console.log("Chord was canceled.")
-//     setTimeout(() => {
-//         console.clear()
-//     }, "1000");
-// }
+if (readlineSync.keyInYN(`
+Is this correct?`)) {
+    chord.symbol = readlineSync.question("Music notation: ")
+    chord.formalName = readlineSync.question("Formal name: ")
+} else {
+    console.log("Chord was canceled.")
+    setTimeout(() => {
+        console.clear()
+    }, "1000");
+}
