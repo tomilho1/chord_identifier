@@ -8,22 +8,25 @@ let fifth_circle = [
     "F#", "C#", "G#", "D#", "A#", "E#", "B#",
     "F##", "C##", "G##", "D##", "A##", "E##", "B##"]
 
-function generateChord(userNotes) {
-    userNotes = userNotes.replaceAll(",", " ").split(" ")
+/**
+ * @param {string} notes Generate a chord object through a string of notes separated by commas ("C, E, G").
+ * 
+ */
+function generateChord(notes) { //generates a chord
+    notes = notes.replaceAll(",", " ").split(" ")
     let chord = {}
 
-    chord.root = userNotes[0]
-
+    chord.bass = notes[0]
 
     chord.looseNotes = []
     fifth_circle.forEach((note, inc) => {
-        if (userNotes.includes(fifth_circle[inc]))
+        if (notes.includes(fifth_circle[inc]))
             chord.looseNotes.push(inc)
     })
 
     chord.orderedNotes = []
     chord.stringNotes = []
-    userNotes.forEach((note, index) => {
+    notes.forEach((note, index) => {
         if (fifth_circle.includes(note)) {
             if (chord.stringNotes.includes(note)) { }   // Skips if it already has this note...
             else {
@@ -36,11 +39,11 @@ function generateChord(userNotes) {
 
 
 
-    chord.intervals = []
+    chord.looseIntervals = []
     chord.looseNotes.forEach((note, inc) => {
-        chord.intervals.push(chord.looseNotes[inc + 1] - chord.looseNotes[0])
+        chord.looseIntervals.push(chord.looseNotes[inc + 1] - chord.looseNotes[0])
     })
-    chord.intervals.pop()
+    chord.looseIntervals.pop()
     // pop() ensures chord.intervals's
     // length is always the same as
     // chord.looseNotes - 1.
@@ -53,8 +56,8 @@ function generateChord(userNotes) {
 
 
     // chord.tonicIndex corresponds to which note of chord.looseNotes is the tonic
-    for (i = 0; i < userNotes.length; i++) {
-        if (chord.root === fifth_circle[chord.looseNotes[i]]) {
+    for (i = 0; i < notes.length; i++) {
+        if (chord.bass === fifth_circle[chord.looseNotes[i]]) {
             chord.tonicIndex = i
             break
         }
@@ -78,7 +81,7 @@ F## C## G## D## A## E## B##
         chord.graph = chord.graph.replace(chordNotes, "\x1b[48;5;236m" + chordNotes + "\x1b[40m")
     }
 
-    let rootNote = chord.root.concat("  ").slice(0, 3) // "T "
+    let rootNote = chord.bass.concat("  ").slice(0, 3) // "T "
     chord.graph = chord.graph.replace(rootNote, "\x1b[48;5;241m" + rootNote + "\x1b[40m")
 
     return chord
