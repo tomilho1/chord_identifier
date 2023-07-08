@@ -1,4 +1,4 @@
-let circleOfFifths = [
+const circleOfFifths = [
     "Fbb", "Cbb", "Gbb", "Dbb", "Abb", "Ebb", "Bbb",
     "Fb", "Cb", "Gb", "Db", "Ab", "Eb", "Bb",
     "F", "C", "G", "D", "A", "E", "B",
@@ -7,53 +7,51 @@ let circleOfFifths = [
 
 
 class Chord {
-    constructor(notes) {
-        notes = notes.replaceAll(" ","").split(",");
-        
+    constructor(notes, options) {
+        notes = notes.split(" ");
         this.bass = notes[0]
 
-        this.looseNotes = []
-        circleOfFifths.forEach((note, inc) => {
-            if (notes.includes(circleOfFifths[inc]))
-                this.looseNotes.push(inc)
-        })
-
-        this.orderedNotes = []
+        let orderedNotes = []
         this.stringNotes = []
         notes.forEach((note, index) => {
             if (circleOfFifths.includes(note)) {
                 if (this.stringNotes.includes(note)) { }
                 else {
-                    this.orderedNotes.push(circleOfFifths.indexOf(note))
+                    orderedNotes.push(circleOfFifths.indexOf(note))
                     this.stringNotes.push(note)
                 }
             }
             else { }
         });
 
-        this.looseIntervals = []
-        this.looseNotes.forEach((note, inc) => {
-            this.looseIntervals.push(this.looseNotes[inc + 1] - this.looseNotes[0])
+        let orderedIntervals = []
+        orderedNotes.forEach((note, inc) => {
+            orderedIntervals.push(orderedNotes[inc + 1] - orderedNotes[0])
         })
-        this.looseIntervals.pop()
+        orderedIntervals.pop()
 
-        this.orderedIntervals = []
-        this.orderedNotes.forEach((note, inc) => {
-            this.orderedIntervals.push(this.orderedNotes[inc + 1] - this.orderedNotes[inc])
+        let looseNotes = []
+        circleOfFifths.forEach((note, inc) => {
+            if (notes.includes(circleOfFifths[inc]))
+                looseNotes.push(inc)
         })
-        this.orderedIntervals.pop()
 
-        // Chord.tonicIndex corresponds to which note of Chord.looseNotes is the tonic
-        for (let i = 0; i < notes.length; i++) {
-            if (this.bass === circleOfFifths[this.looseNotes[i]]) {
-                this.tonicIndex = i
-                break
-            }
+        let looseIntervals = []
+        looseNotes.forEach((note, inc) => {
+            looseIntervals.push(looseNotes[inc + 1] - looseNotes[0])
+        })
+        looseIntervals.pop()
+
+        if (options.dev) {
+            this.orderedNotes = orderedNotes;
+            this.looseNotes = looseNotes;
+            this.looseIntervals = looseIntervals;
+            this.orderedIntervals = orderedIntervals;
         }
-    }
+    };
 
     getGraphics() {
-        const circle =
+        let graph =
 `---------------------------
 Fbb Cbb Gbb Dbb Abb Ebb Bbb
 Fb  Cb  Gb  Db  Ab  Eb  Bb 
@@ -61,8 +59,6 @@ F   C   G   D   A   E   B
 F#  C#  G#  D#  A#  E#  B# 
 F## C## G## D## A## E## B##
 ---------------------------`
-
-        let graph = circle
 
         for (let i = 0; i < this.stringNotes.length; i++) {
             let chordNotes = this.stringNotes[i].concat("  ").slice(0, 3)
@@ -76,7 +72,4 @@ F## C## G## D## A## E## B##
     }
 };
 
-let a = new Chord("C, E, G")
-
-console.log(a.getGraphics())
-console.log(a)
+module.exports = Chord;

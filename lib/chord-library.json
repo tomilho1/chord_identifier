@@ -1,0 +1,41 @@
+[
+  {
+    "formalName": "major",
+    "symbol": "",
+    "looseIntervals": [
+      1,
+      4
+    ],
+    "orderedIntervals": [
+      4,
+      1
+    ],
+    "tonicIndex": 0
+  },
+  {
+    "formalName": "minor",
+    "symbol": "m",
+    "looseIntervals": [
+      3,
+      4
+    ],
+    "orderedIntervals": [
+      -3,
+      1
+    ],
+    "tonicIndex": 1
+  },
+  {
+    "formalName": "suspended fourth",
+    "symbol": "sus4",
+    "looseIntervals": [
+      1,
+      2
+    ],
+    "orderedIntervals": [
+      -1,
+      1
+    ],
+    "tonicIndex": 1
+  }
+]
