@@ -1,0 +1,22 @@
+{
+  "1": "perfect fifth",
+  "2": "major second",
+  "3": "major sixth",
+  "4": "major third",
+  "5": "major seventh",
+  "6": "lydian fourth",
+  "7": "augmented unison",
+  "8": "augmented fifth",
+  "9": "augmented second",
+  "10": "augmented sixth",
+  "-1": "perfect fourth",
+  "-2": "minor seventh",
+  "-3": "minor third",
+  "-4": "minor sixth",
+  "-5": "minor second",
+  "-6": "diminished fifth",
+  "-7": "diminished unison",
+  "-8": "diminished fourth",
+  "-9": "diminished seventh",
+  "-12": "diminished second"
+}
