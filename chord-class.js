@@ -7,7 +7,7 @@ const circleOfFifths = [
 
 
 class Chord {
-    constructor(notes, options) {
+    constructor(notes, options = {}) {
         notes = notes.split(" ");
         this.bass = notes[0]
 
@@ -21,7 +21,6 @@ class Chord {
                     this.stringNotes.push(note)
                 }
             }
-            else { }
         });
 
         let orderedIntervals = []
