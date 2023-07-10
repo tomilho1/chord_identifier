@@ -73,6 +73,35 @@ class Chord {
         }
     };
 
+    invert(inversionIndex) {
+        inversionIndex = inversionIndex % this.orderedNotes.length
+
+        function rearrange (array, invIdx) {
+            let size = array.length
+            array = array.concat(array);
+            return array.splice(invIdx, size);
+        }
+        this.orderedNotes = rearrange(this.orderedNotes, inversionIndex)
+        this.stringNotes = rearrange(this.stringNotes, inversionIndex)
+
+        this.orderedIntervals = this.orderedNotes.map((note, inc) => {
+            return this.orderedNotes[inc + 1] - this.orderedNotes[0]
+        })
+        this.orderedIntervals.pop()
+
+        this.bass = circleOfFifths[this.orderedNotes[0]]
+
+        if (this.symbol === undefined) {
+            return
+        }
+
+        if (this.tonic === this.bass) {
+            this.symbol = this.bass + this.symbol.replace(this.bass,"")
+        } else {
+            this.symbol = this.symbol.split("/")[0] + "/" + this.bass
+        }
+    }
+
     getGraphics() {
         let graph =
 `---------------------------
