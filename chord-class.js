@@ -1,3 +1,12 @@
+const fs = require('fs');
+const path = require('path')
+
+let chordLibrary = fs.readFileSync(path.join(__dirname, './lib/chord-library.json'));
+chordLibrary = JSON.parse(chordLibrary);
+let intervalLibrary = fs.readFileSync(path.join(__dirname, './lib/interval-library.json'));
+intervalLibrary = JSON.parse(intervalLibrary);
+intervalLibrary = new Map(Object.entries(intervalLibrary));
+
 const circleOfFifths = [
     "Fbb", "Cbb", "Gbb", "Dbb", "Abb", "Ebb", "Bbb",
     "Fb", "Cb", "Gb", "Db", "Ab", "Eb", "Bb",
@@ -5,47 +14,62 @@ const circleOfFifths = [
     "F#", "C#", "G#", "D#", "A#", "E#", "B#",
     "F##", "C##", "G##", "D##", "A##", "E##", "B##"]
 
+function arrayCompare(array1, array2) {
+    if (array1.length !== array2.length) {
+        return false;
+    }
+    for (let i = 0; i < array1.length; i++) {
+        if (array1[i] !== array2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
 
 class Chord {
-    constructor(notes, options = {}) {
-        notes = notes.split(" ");
-        this.bass = notes[0]
+    constructor(notes) {
+        const parsedNotes = notes.split(" ");
+        this.bass = parsedNotes[0]
 
-        let orderedNotes = []
+        this.orderedNotes = []
         this.stringNotes = []
-        notes.forEach((note, index) => {
-            if (circleOfFifths.includes(note)) {
-                if (this.stringNotes.includes(note)) { }
-                else {
-                    orderedNotes.push(circleOfFifths.indexOf(note))
-                    this.stringNotes.push(note)
-                }
+        
+        parsedNotes.forEach((note, index) => {
+            if (circleOfFifths.includes(note) && !this.stringNotes.includes(note)) {
+              this.orderedNotes.push(circleOfFifths.indexOf(note));
+              this.stringNotes.push(note);
             }
         });
 
-        let orderedIntervals = []
-        orderedNotes.forEach((note, inc) => {
-            orderedIntervals.push(orderedNotes[inc + 1] - orderedNotes[0])
+        this.orderedIntervals = this.orderedNotes.map((note, inc) => {
+            return this.orderedNotes[inc + 1] - this.orderedNotes[0]
         })
-        orderedIntervals.pop()
+        this.orderedIntervals.pop();
 
-        let looseNotes = []
+        this.looseNotes = []
         circleOfFifths.forEach((note, inc) => {
-            if (notes.includes(circleOfFifths[inc]))
-                looseNotes.push(inc)
+            if (parsedNotes.includes(circleOfFifths[inc]))
+                this.looseNotes.push(inc)
         })
 
-        let looseIntervals = []
-        looseNotes.forEach((note, inc) => {
-            looseIntervals.push(looseNotes[inc + 1] - looseNotes[0])
+        this.looseIntervals = this.looseNotes.map((note, inc) => {
+            return this.looseNotes[inc + 1] - this.looseNotes[0]
         })
-        looseIntervals.pop()
+        this.looseIntervals.pop();
 
-        if (options.dev) {
-            this.orderedNotes = orderedNotes;
-            this.looseNotes = looseNotes;
-            this.looseIntervals = looseIntervals;
-            this.orderedIntervals = orderedIntervals;
+        for (let i = 0; i < chordLibrary.length; i++) {
+            let currentChord
+            if (arrayCompare(this.looseIntervals, chordLibrary[i].looseIntervals)) {
+                currentChord = chordLibrary[i]
+                this.tonic = circleOfFifths[this.looseNotes[currentChord.tonicIndex]];
+                if (this.tonic === this.bass) {
+                    this.symbol = `${this.bass}${currentChord.symbol}`
+                } else {
+                    this.symbol = `${this.tonic}${currentChord.symbol}/${this.bass}`
+                }
+                this.name = `${this.tonic} ${currentChord.formalName}`
+                break
+            }
         }
     };
 
@@ -71,4 +95,8 @@ F## C## G## D## A## E## B##
     }
 };
 
-module.exports = Chord;
+module.exports = {
+    Chord,
+    chordLibrary,
+    intervalLibrary
+}

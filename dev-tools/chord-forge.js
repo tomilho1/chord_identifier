@@ -1,15 +1,13 @@
 console.clear()
 const readlineSync = require('readline-sync');
 const fs = require('fs');
-const Chord = require('../chord-class');
-
-let chordLibrary = fs.readFileSync('chord-library.json');
-chordLibrary = JSON.parse(chordLibrary);
+const path = require('path')
+let {Chord, chordLibrary} = require('../chord-class');
 
 while (true) {
     console.clear();
     let userNotes = readlineSync.question("Notes in root position: ");
-    userChord = new Chord (userNotes, {dev: true});
+    userChord = new Chord (userNotes);
 
     for (let i = 0; i < userChord.orderedNotes.length; i++) {
         if (userChord.bass === [
@@ -42,7 +40,7 @@ while (true) {
     if (readlineSync.keyInYN('\nName another chord?')) {
     } else {
         chordLibrary = JSON.stringify(chordLibrary, null, 2);
-        fs.writeFileSync('chord-library.json', chordLibrary)
+        fs.writeFileSync(path.join(__dirname,'../lib/chord-library.json'), chordLibrary)
         break
     }
 }

@@ -37,5 +37,78 @@
       1
     ],
     "tonicIndex": 1
+  },
+  {
+    "formalName": "major seventh",
+    "symbol": "maj7",
+    "looseIntervals": [
+      1,
+      4,
+      5
+    ],
+    "orderedIntervals": [
+      4,
+      1,
+      5
+    ],
+    "tonicIndex": 0
+  },
+  {
+    "formalName": "minor seventh",
+    "symbol": "m7",
+    "looseIntervals": [
+      1,
+      3,
+      4
+    ],
+    "orderedIntervals": [
+      -3,
+      1,
+      -2
+    ],
+    "tonicIndex": 2
+  },
+  {
+    "formalName": "dominant seventh",
+    "symbol": "7",
+    "looseIntervals": [
+      2,
+      3,
+      6
+    ],
+    "orderedIntervals": [
+      4,
+      1,
+      -2
+    ],
+    "tonicIndex": 1
+  },
+  {
+    "formalName": "dominant seventh suspended fourth",
+    "symbol": "7sus4",
+    "looseIntervals": [
+      1,
+      2,
+      3
+    ],
+    "orderedIntervals": [
+      -1,
+      1,
+      -2
+    ],
+    "tonicIndex": 2
+  },
+  {
+    "formalName": "diminished",
+    "symbol": "dim",
+    "looseIntervals": [
+      3,
+      6
+    ],
+    "orderedIntervals": [
+      -3,
+      -6
+    ],
+    "tonicIndex": 2
   }
 ]

@@ -1,16 +1,13 @@
 const readlineSync = require('readline-sync');
 const fs = require('fs');
-const Chord = require('../chord-class');
-
-let intervalLibrary = fs.readFileSync('interval-library.json');
-intervalLibrary = JSON.parse(intervalLibrary);
-intervalLibrary = new Map(Object.entries(intervalLibrary));
+const path = require('path')
+let {Chord, intervalLibrary} = require('../chord-class');
 
 while (true) {
     console.clear();
     let userNotes = readlineSync.question("Insert two notes: ");
     while (true) {
-        userChord = new Chord(userNotes, { dev: true });
+        userChord = new Chord(userNotes);
         if (userChord.orderedNotes.length !== 2) {
             userNotes = readlineSync.question("Please insert only two different valid notes! ")
         } else { break }
@@ -32,7 +29,7 @@ while (true) {
     } else {
         intervalLibrary = Object.fromEntries(intervalLibrary);
         intervalLibrary = JSON.stringify(intervalLibrary, null, 2);
-        fs.writeFileSync('interval-library.json', intervalLibrary)
+        fs.writeFileSync(path.join(__dirname,'../lib/interval-library.json'), intervalLibrary)
         break
     }
 }
