@@ -110,5 +110,78 @@
       -6
     ],
     "tonicIndex": 2
+  },
+  {
+    "formalName": "half diminished",
+    "symbol": "min7b5",
+    "looseIntervals": [
+      3,
+      4,
+      6
+    ],
+    "orderedIntervals": [
+      -3,
+      -6,
+      -2
+    ],
+    "tonicIndex": 3
+  },
+  {
+    "formalName": "minor major seventh",
+    "symbol": "m(maj7)",
+    "looseIntervals": [
+      3,
+      4,
+      8
+    ],
+    "orderedIntervals": [
+      -3,
+      1,
+      5
+    ],
+    "tonicIndex": 1
+  },
+  {
+    "formalName": "augmented",
+    "symbol": "+",
+    "looseIntervals": [
+      4,
+      8
+    ],
+    "orderedIntervals": [
+      4,
+      8
+    ],
+    "tonicIndex": 0
+  },
+  {
+    "formalName": "seven augmented",
+    "symbol": "7(#5)",
+    "looseIntervals": [
+      2,
+      6,
+      10
+    ],
+    "orderedIntervals": [
+      4,
+      8,
+      -2
+    ],
+    "tonicIndex": 1
+  },
+  {
+    "formalName": "major seventh augmented",
+    "symbol": "maj7(#5)",
+    "looseIntervals": [
+      4,
+      5,
+      8
+    ],
+    "orderedIntervals": [
+      4,
+      8,
+      5
+    ],
+    "tonicIndex": 0
   }
 ]
