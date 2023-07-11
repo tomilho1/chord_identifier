@@ -78,7 +78,6 @@ class Chord {
             inversionIndex = this.stringNotes.indexOf(inversionIndex)
         }
         if (inversionIndex < 0) {
-            console.log("not possible!")
             return
         }
 
