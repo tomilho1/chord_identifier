@@ -28,7 +28,7 @@ function arrayCompare(array1, array2) {
 
 class Chord {
     constructor(notes) {
-        const parsedNotes = notes.split(" ");
+        const parsedNotes = notes.replaceAll(","," ").split(" ");
         this.bass = parsedNotes[0]
 
         this.orderedNotes = []
@@ -74,6 +74,14 @@ class Chord {
     };
 
     invert(inversionIndex) {
+        if ((typeof inversionIndex) === 'string') {
+            inversionIndex = this.stringNotes.indexOf(inversionIndex)
+        }
+        if (inversionIndex < 0) {
+            console.log("not possible!")
+            return
+        }
+
         inversionIndex = inversionIndex % this.orderedNotes.length
 
         function rearrange (array, invIdx) {
@@ -95,8 +103,8 @@ class Chord {
             return
         }
 
-        if (this.tonic === this.bass) {
-            this.symbol = this.bass + this.symbol.replace(this.bass,"")
+        if (this.tonic == this.bass) {
+            this.symbol = this.symbol.split("/")[0]
         } else {
             this.symbol = this.symbol.split("/")[0] + "/" + this.bass
         }
