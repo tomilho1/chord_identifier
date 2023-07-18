@@ -73,40 +73,43 @@ class Chord {
         }
     };
 
-    invert(inversionIndex) {
+    getInversion(inversionIndex) {
+        let invertedChord = {...this}
+
         if ((typeof inversionIndex) === 'string') {
-            inversionIndex = this.stringNotes.indexOf(inversionIndex)
+            inversionIndex = invertedChord.stringNotes.indexOf(inversionIndex)
         }
         if (inversionIndex < 0) {
-            return
+            return invertedChord
         }
 
-        inversionIndex = inversionIndex % this.orderedNotes.length
+        inversionIndex = inversionIndex % invertedChord.orderedNotes.length
 
         function rearrange (array, invIdx) {
             let size = array.length
             array = array.concat(array);
             return array.splice(invIdx, size);
         }
-        this.orderedNotes = rearrange(this.orderedNotes, inversionIndex)
-        this.stringNotes = rearrange(this.stringNotes, inversionIndex)
+        invertedChord.orderedNotes = rearrange(invertedChord.orderedNotes, inversionIndex)
+        invertedChord.stringNotes = rearrange(invertedChord.stringNotes, inversionIndex)
 
-        this.orderedIntervals = this.orderedNotes.map((note, inc) => {
-            return this.orderedNotes[inc + 1] - this.orderedNotes[0]
+        invertedChord.orderedIntervals = invertedChord.orderedNotes.map((note, inc) => {
+            return invertedChord.orderedNotes[inc + 1] - invertedChord.orderedNotes[0]
         })
-        this.orderedIntervals.pop()
+        invertedChord.orderedIntervals.pop()
 
-        this.bass = circleOfFifths[this.orderedNotes[0]]
+        invertedChord.bass = circleOfFifths[invertedChord.orderedNotes[0]]
 
-        if (this.symbol === undefined) {
-            return
+        if (invertedChord.symbol === undefined) {
+            return invertedChord
         }
 
-        if (this.tonic == this.bass) {
-            this.symbol = this.symbol.split("/")[0]
+        if (invertedChord.tonic == invertedChord.bass) {
+            invertedChord.symbol = invertedChord.symbol.split("/")[0]
         } else {
-            this.symbol = this.symbol.split("/")[0] + "/" + this.bass
+            invertedChord.symbol = invertedChord.symbol.split("/")[0] + "/" + invertedChord.bass
         }
+        return invertedChord
     }
 
     getGraphics() {
